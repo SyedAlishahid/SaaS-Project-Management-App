@@ -291,5 +291,4 @@ module.exports = {
   addMembers,
   removeMember,
   updateMemberRole,
-  updateMemberRole,
 };

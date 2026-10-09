@@ -20,7 +20,7 @@ const taskSchema = mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: "Project",
     },
-    assignTo: {
+    assignedTo: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
     },

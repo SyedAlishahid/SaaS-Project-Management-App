@@ -55,9 +55,9 @@ const createProject = async (req, res) => {
 
 const getProject = async (req, res) => {
   try {
-    const { workspaceId } = req.params;
+    const { projectId } = req.params;
 
-    const findProject = await Project.find({ workspace: workspaceId });
+    const findProject = await Project.findById(projectId);
 
     if (!findProject) {
       return res.status(500).json({
@@ -69,6 +69,33 @@ const getProject = async (req, res) => {
     return res.status(201).json({
       success: true,
       projects: findProject,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      message: error.message,
+      success: false,
+    });
+  }
+};
+
+const getProjects = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const findWorkspaceAllProjects = await Project.find({
+      workspace: id,
+    });
+
+    if (!findWorkspaceAllProjects) {
+      return res.status(500).json({
+        success: false,
+        message: "Workspace not found~",
+      });
+    }
+
+    return res.status(201).json({
+      success: true,
+      projects: findWorkspaceAllProjects,
     });
   } catch (error) {
     return res.status(500).json({
@@ -149,4 +176,10 @@ const deleteProject = async (req, res) => {
     });
   }
 };
-module.exports = { createProject, getProject, deleteProject, updateProject };
+module.exports = {
+  createProject,
+  getProject,
+  getProjects,
+  deleteProject,
+  updateProject,
+};
