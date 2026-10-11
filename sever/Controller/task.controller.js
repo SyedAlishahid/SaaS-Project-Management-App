@@ -2,7 +2,6 @@ const mongoose = require("mongoose");
 const Task = require("../Model/task.model.js");
 const Project = require("../Model/project.model.js");
 const User = require("../Model/user.model.js");
-
 const createTask = async (req, res) => {
   try {
     const {
@@ -52,25 +51,34 @@ const createTask = async (req, res) => {
   }
 };
 
-// const getTasks = async (req, res) => {
-//   try {
-//     const { projectId } = req.params;
+const getTasks = async (req, res) => {
+  try {
+    const { id } = req.params;
 
-//     const ProjectInfo = await Project.findById(projectId);
-//     if (!ProjectInfo) {
-//       return res.status(500).json({
-//         success: false,
-//         message: "Project not found~",
-//       });
-//     }
+    const tasks = await Task.find({
+      Project: id,
+      status: "Todo",
+      priority: "High",
+    });
 
-//   } catch (error) {
-//     return res.status(500).json({
-//       message: error.message,
-//       success: false,
-//     });
-//   }
-// };
+    if (!tasks) {
+      return res.status(500).json({
+        success: false,
+        message: "No task found with High 'priority' and with 'Todo' status.",
+      });
+    }
+
+    return res.status(200).json({
+      success: true,
+      tasks: tasks,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
+};
 
 const getTask = async (req, res) => {
   try {
@@ -223,6 +231,7 @@ const deleteTask = async (req, res) => {
 module.exports = {
   createTask,
   getTask,
+  getTasks,
   updateStatus,
   updateTask,
   deleteTask,
