@@ -33,7 +33,7 @@ const taskSchema = mongoose.Schema(
 
     priority: {
       type: String,
-      enum: ["low", "medium", "High"],
+      enum: ["low", "medium", "high"],
       default: "medium",
     },
 
