@@ -11,6 +11,7 @@ const authRouter = require("./Routes/user.router.js");
 const workFlowRouter = require("./Routes/workflow.router.js");
 const projectRouter = require("./Routes/project.router.js");
 const taskRouter = require("./Routes/task.router.js");
+const commetRouter = require("./Routes/comment.router.js");
 
 app.use(cors());
 app.use(express.json({ limit: "16kb" }));
@@ -22,6 +23,7 @@ app.use("/api/users/v3/auth", authRouter);
 app.use("/api/users/v3/workspace", workFlowRouter);
 app.use("/api/users/v3/project", projectRouter);
 app.use("/api/users/v3/task", taskRouter);
+app.use("/api/users/v3/", commetRouter);
 
 connectDB();
 app.get("/", (req, res) => {
