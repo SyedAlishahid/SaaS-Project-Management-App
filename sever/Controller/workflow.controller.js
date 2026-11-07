@@ -31,31 +31,33 @@ const createWorkflow = async (req, res) => {
     });
   }
 };
-
 const getMyWorkspace = async (req, res) => {
   try {
     const owner = req.user._id;
 
-    const findWorkflow = await Workflow.find({ owner: owner });
-    if (!findWorkflow) {
-      return res.status(500).json({
+    const findWorkflow = await Workflow.find({ owner: owner }).populate(
+      "members.user",
+      "name email isVerified profile bio",
+    );
+
+    if (findWorkflow.length === 0) {
+      return res.status(404).json({
         success: false,
         message: "No workspace found~",
       });
     }
 
-    return res.status(201).json({
+    return res.status(200).json({
       success: true,
       workspaces: findWorkflow,
     });
   } catch (error) {
-    res.status(500).json({
+    return res.status(500).json({
       success: false,
       message: error.message,
     });
   }
 };
-
 const getWorkspace = async (req, res) => {
   try {
     const { id } = req.params;

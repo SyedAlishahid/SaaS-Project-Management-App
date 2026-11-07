@@ -22,12 +22,16 @@ const workflowSchema = mongoose.Schema(
           ref: "User",
           required: true,
         },
-
         role: {
           type: String,
           enum: ["admin", "member"],
           default: "member",
         },
+        name: { type: String, required: true },
+        email: { type: String, required: true },
+        isVerified: { type: Boolean, required: true },
+        profile: { type: String, required: true },
+        bio: { type: String, required: true },
       },
     ],
   },

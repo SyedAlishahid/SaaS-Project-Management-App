@@ -57,8 +57,6 @@ const getTasks = async (req, res) => {
 
     const tasks = await Task.find({
       Project: id,
-      status: "Todo",
-      priority: "High",
     });
 
     if (!tasks) {

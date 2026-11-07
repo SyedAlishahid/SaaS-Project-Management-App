@@ -106,17 +106,15 @@ const login = async (req, res) => {
       });
     }
 
-    const passCheck = findByEmail.comparePassword(password);
+    const passCheck = await findByEmail.comparePassword(password);
+    console.log("Password matches:", passCheck);
     if (!passCheck) {
       return res.status(500).json({
         message: "Incorrect password~",
         success: false,
       });
     }
-
-    const hideCreds = await User.findById(findByEmail.id).select(
-      "-password -refreshToken",
-    );
+    const hideCreds = await User.findById(findByEmail.id).select("-password ");
 
     const { accessToken, refreshToken } = await generateToken(findByEmail.id);
 

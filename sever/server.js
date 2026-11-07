@@ -14,7 +14,12 @@ const taskRouter = require("./Routes/task.router.js");
 const commetRouter = require("./Routes/comment.router.js");
 const dashboardRouter = require("./Routes/dashboard.router.js");
 
-app.use(cors());
+app.use(
+  cors({
+    origin: "http://localhost:5173",
+    credentials: true,
+  }),
+);
 app.use(express.json({ limit: "16kb" }));
 app.use(express.urlencoded({ extended: true, limit: "16kb" }));
 app.use(express.static("public"));
@@ -26,7 +31,6 @@ app.use("/api/users/v3/project", projectRouter);
 app.use("/api/users/v3/task", taskRouter);
 app.use("/api/users/v3/", commetRouter);
 app.use("/api/users/v3/dashboard", dashboardRouter);
-
 connectDB();
 
 app.get("/", (req, res) => {
