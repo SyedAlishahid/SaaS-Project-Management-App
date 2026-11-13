@@ -2,7 +2,6 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import { SignupForm } from "../pages/signup.jsx";
 import { LoginFrom } from "../pages/login.jsx";
-
 import Dashboard from "../pages/dashboard.jsx";
 import ProjectDetail from "../pages/ProjectDetail.jsx";
 import ProjectInfo from "../pages/ProjectInfo.jsx";

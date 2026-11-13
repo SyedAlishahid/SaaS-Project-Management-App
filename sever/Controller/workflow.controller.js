@@ -175,7 +175,7 @@ const removeMember = async (req, res) => {
 
     const workspace = await Workflow.findById(id);
     if (!workspace) {
-      return res.status(500).json({
+      return res.status(404).json({
         success: false,
         message: "Workspace not found~",
       });
@@ -183,7 +183,7 @@ const removeMember = async (req, res) => {
 
     const findUser = await User.findById(userId);
     if (!findUser) {
-      return res.status(500).json({
+      return res.status(404).json({
         success: false,
         message: "User not found~",
       });
