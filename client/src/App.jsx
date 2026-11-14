@@ -7,7 +7,7 @@ import ProjectDetail from "../pages/ProjectDetail.jsx";
 import ProjectInfo from "../pages/ProjectInfo.jsx";
 import Workspaces from "../pages/workspaces.jsx";
 import MyTasks from "../pages/myTasks.jsx";
-
+import Profile from "../pages/profile.jsx";
 import ProtectRoutes from "../context/ProtectRoutes.jsx";
 import NotFound from "../pages/Notfound.jsx";
 
@@ -33,6 +33,7 @@ function App() {
           <Route path="/workspace/my-workspace" element={<Workspaces />} />
 
           <Route path="/task/projects/:projectId/tasks" element={<MyTasks />} />
+          <Route path="/user" element={<Profile />} />
         </Route>
 
         {/* Not Found */}

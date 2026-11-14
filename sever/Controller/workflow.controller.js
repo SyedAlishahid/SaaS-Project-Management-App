@@ -40,13 +40,6 @@ const getMyWorkspace = async (req, res) => {
       "name email isVerified profile bio",
     );
 
-    if (findWorkflow.length === 0) {
-      return res.status(404).json({
-        success: false,
-        message: "No workspace found~",
-      });
-    }
-
     return res.status(200).json({
       success: true,
       workspaces: findWorkflow,
@@ -271,7 +264,14 @@ const updateMemberRole = async (req, res) => {
       },
       { new: true },
     );
-
+    if (!updatedRole) {
+      return res.status(404).json({
+        success: false,
+        message: "Workspace member not found",
+      });
+    }
+    console.log("Requested Role:", newRole);
+    console.log("Updated Workspace:", updatedRole);
     return res.status(201).json({
       success: true,
       message: "Role updated successfully~",

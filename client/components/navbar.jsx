@@ -12,8 +12,13 @@ import {
   X,
   Command,
   ChevronRight,
+  LogOut,
 } from "lucide-react";
+import { Link } from "react-router-dom";
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
+import api from "../api/axios.js";
 const Navbar = ({
   title = "Saas Management",
   gridCols = "col-span-12",
@@ -21,6 +26,7 @@ const Navbar = ({
   mdGridCols = "md:col-span-12",
   mdGridRows = "md:row-span-2",
 }) => {
+  const navigate = useNavigate();
   const { workspaceId, projectId } = useParams();
   const [menuOpen, setMenuOpen] = useState(false);
 
@@ -47,6 +53,17 @@ const Navbar = ({
     },
   ];
 
+  const logoutHandler = async () => {
+    try {
+      api.post("/auth/logout");
+      toast.success("User logout Successfully");
+      navigate("/login");
+    } catch (error) {
+      console.log(error);
+      toast.error("Try again");
+    }
+  };
+
   return (
     <>
       <header
@@ -61,7 +78,7 @@ const Navbar = ({
               onClick={() => setMenuOpen((prev) => !prev)}
               aria-label="Toggle Navigation Menu"
               aria-expanded={menuOpen}
-              className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border transition-all duration-200 ${
+              className={`flex h-10  lg:hidden flex w-10 shrink-0 items-center justify-center rounded-xl border transition-all duration-200 ${
                 menuOpen
                   ? "bg-slate-800 text-white border-slate-800 shadow-sm"
                   : "bg-slate-50 text-slate-700 border-slate-200 hover:bg-slate-800 hover:text-white hover:border-slate-800"
@@ -70,13 +87,13 @@ const Navbar = ({
               {menuOpen ? (
                 <X className="h-5 w-5" />
               ) : (
-                <Menu className="h-5 w-5" />
+                <Menu className="h-5 w-5 lg:hidden flex" />
               )}
             </button>
 
             {/* Brand Icon & Title */}
             <div className="flex items-center gap-2.5 min-w-0">
-              <div className="hidden sm:flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-slate-800 text-white shadow-sm">
+              <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-slate-800 text-white shadow-sm">
                 <Command className="h-4 w-4" />
               </div>
               <span className="truncate text-base sm:text-lg font-bold tracking-tight text-slate-800">
@@ -100,16 +117,16 @@ const Navbar = ({
             {/* Notification Bell */}
             <button
               type="button"
+              onClick={logoutHandler}
               aria-label="Notifications"
               className="relative flex h-9 w-9 items-center justify-center rounded-xl border border-slate-200 bg-white text-slate-600 hover:bg-slate-100 hover:text-slate-800 transition-colors"
             >
-              <Bell className="h-4 w-4" />
-              <span className="absolute top-2 right-2 h-2 w-2 rounded-full bg-slate-800 ring-2 ring-white" />
+              <LogOut className="h-4 w-4" />
             </button>
 
             {/* User Profile */}
-            <button
-              type="button"
+            <Link
+              to="/user"
               aria-label="User Profile"
               className="flex items-center gap-2 rounded-xl border border-slate-200 bg-white p-1 sm:pr-3 text-slate-700 hover:bg-slate-100 hover:border-slate-300 transition-colors"
             >
@@ -119,7 +136,7 @@ const Navbar = ({
               <span className="hidden sm:block text-xs font-semibold text-slate-700">
                 Account
               </span>
-            </button>
+            </Link>
           </div>
         </div>
 

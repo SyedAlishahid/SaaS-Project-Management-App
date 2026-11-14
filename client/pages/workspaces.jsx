@@ -17,6 +17,8 @@ const workspaces = () => {
   const [memberRole, setMemberRole] = useState("member");
 
   const [addmember, setAddMember] = useState([]);
+  const [newRole, setNewrole] = useState("");
+  const [email, setEmail] = useState("");
 
   useEffect(() => {
     api
@@ -114,10 +116,20 @@ const workspaces = () => {
     }
   };
 
-  const handleUpdateMemberRole = (e) => {
-    e.preventDefault();
-    // TODO: update member role API
-    closeModal();
+  const handleUpdateMemberRole = async (e) => {
+    try {
+      e.preventDefault();
+      closeModal();
+      const resp = await api.patch(
+        `/workspace/update-role/${targetWorkspace._id}/${userId}`,
+        { newRole },
+      );
+      toast.success("User role updated Successfully~");
+      console.log(resp);
+    } catch (error) {
+      console.log(error);
+      toast.error("can't Update users role~");
+    }
   };
 
   return (
@@ -298,6 +310,18 @@ const workspaces = () => {
                               >
                                 - Remove
                               </button>
+                              <button
+                                type="button"
+                                onClick={() => {
+                                  setTargetWorkspace(ws);
+                                  setUserId(m.user._id);
+                                  setEmail(m.user.email);
+                                  setModalType("updateMemberRole");
+                                }}
+                                className="px-2 py-1.5 text-[11px] font-medium rounded-lg bg-amber-500/10 text-amber-400 border border-amber-500/20 hover:bg-amber-500/20 transition truncate"
+                              >
+                                Update Role
+                              </button>
                             </div>
                           ))}
                         </div>
@@ -332,16 +356,6 @@ const workspaces = () => {
                       className="px-2 py-1.5 text-[11px] font-medium rounded-lg bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 hover:bg-emerald-500/20 transition truncate"
                     >
                       + Add
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => {
-                        setTargetWorkspace(ws);
-                        setModalType("updateMemberRole");
-                      }}
-                      className="px-2 py-1.5 text-[11px] font-medium rounded-lg bg-amber-500/10 text-amber-400 border border-amber-500/20 hover:bg-amber-500/20 transition truncate"
-                    >
-                      Update Role
                     </button>
                   </div>
                 </div>
@@ -557,14 +571,15 @@ const workspaces = () => {
                   <div className="mt-4 space-y-3">
                     <div>
                       <label className="text-xs text-slate-300 font-medium">
-                        Member Email
+                        Email
                       </label>
                       <input
                         type="email"
                         required
                         placeholder="user@example.com"
-                        value={memberEmail}
-                        onChange={(e) => setMemberEmail(e.target.value)}
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        readOnly
                         className="mt-1 w-full bg-black/40 border border-white/10 rounded-xl px-3 py-1.5 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-amber-500"
                       />
                     </div>
@@ -573,12 +588,12 @@ const workspaces = () => {
                         Role
                       </label>
                       <select
-                        value={memberRole}
-                        onChange={(e) => setMemberRole(e.target.value)}
                         className="mt-1 w-full bg-[#12121e] border border-white/10 rounded-xl px-3 py-1.5 text-sm text-white focus:outline-none focus:border-amber-500"
+                        value={newRole}
+                        onChange={(e) => setNewrole(e.target.value)}
                       >
-                        <option value="member">Member</option>
                         <option value="admin">Admin</option>
+                        <option value="member">Member</option>
                       </select>
                     </div>
                   </div>
