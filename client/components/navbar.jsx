@@ -53,11 +53,16 @@ const Navbar = ({
     },
   ];
 
+  const reloadPageHandler = () => {
+    window.location.reload();
+  };
+
   const logoutHandler = async () => {
     try {
-      api.post("/auth/logout");
+      const resp = await api.post("/auth/logout");
       toast.success("User logout Successfully");
       navigate("/login");
+      console.log(resp);
     } catch (error) {
       console.log(error);
       toast.error("Try again");
@@ -92,7 +97,10 @@ const Navbar = ({
             </button>
 
             {/* Brand Icon & Title */}
-            <div className="flex items-center gap-2.5 min-w-0">
+            <div
+              className="flex items-center gap-2.5 min-w-0 hover:cursor-pointer"
+              onClick={reloadPageHandler}
+            >
               <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-slate-800 text-white shadow-sm">
                 <Command className="h-4 w-4" />
               </div>
@@ -102,14 +110,6 @@ const Navbar = ({
             </div>
 
             {/* Quick Scan Button */}
-            <button
-              type="button"
-              aria-label="Scan QR Code"
-              className="hidden sm:inline-flex items-center gap-1.5 ml-2 rounded-lg border border-slate-200 bg-slate-50 px-2.5 py-1.5 text-xs font-medium text-slate-600 hover:bg-slate-800 hover:text-white hover:border-slate-800 transition-colors"
-            >
-              <ScanLine className="h-3.5 w-3.5" />
-              <span>Scan</span>
-            </button>
           </div>
 
           {/* Right: Notifications & Account */}

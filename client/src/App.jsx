@@ -10,6 +10,7 @@ import MyTasks from "../pages/myTasks.jsx";
 import Profile from "../pages/profile.jsx";
 import ProtectRoutes from "../context/ProtectRoutes.jsx";
 import NotFound from "../pages/Notfound.jsx";
+import Members from "../pages/members.jsx";
 
 function App() {
   return (
@@ -34,6 +35,8 @@ function App() {
 
           <Route path="/task/projects/:projectId/tasks" element={<MyTasks />} />
           <Route path="/user" element={<Profile />} />
+
+          <Route path="/members" element={<Members />} />
         </Route>
 
         {/* Not Found */}

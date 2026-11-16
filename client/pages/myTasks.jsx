@@ -170,7 +170,7 @@ const MyTasks = () => {
     if (action === "create") {
       setName("");
       setDescription("");
-      setTaskInfo(selectedTask._id);
+      setTaskInfo("");
       setStatus("");
       setPriority("");
       setAssignedTo("");
