@@ -16,7 +16,7 @@ const dashboardRouter = require("./Routes/dashboard.router.js");
 
 app.use(
   cors({
-    origin: "https://saa-s-project-management-app-ubu5.vercel.app",
+    origin: ["http://localhost:5173", "https://32-gamma-six.vercel.app/"],
     credentials: true,
   }),
 );
