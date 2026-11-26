@@ -18,7 +18,7 @@ app.use(
   cors({
     origin: [
       "http://localhost:5173",
-      "https://saa-s-project-management-app-fan2.vercel.app/",
+      "https://saa-s-project-management-app-fan2.vercel.app",
     ],
     credentials: true,
   }),
